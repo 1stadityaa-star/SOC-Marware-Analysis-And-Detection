@@ -49,8 +49,10 @@ STEP 4: The Attack
 [3. ANALYSIS NOTES]
 ------------------------------------------------------------
 Observation 1:
-Splunk Query used to find endpoint on ip:192.168.0.9 -
+Splunk Query used to find execution of our malware
+```query
  index=endpoint Resume.pdf.exe
+```
 
 Network connections were visible in Splunk. I could see the internal Windows IP 
 connecting back to the Kali IP on port 4444. 
@@ -62,10 +64,11 @@ Sysmon Event Code 1 provided the hash of the file. In a real scenario,
 I would upload this hash to VirusTotal to confirm it is malware.
 
 Splunk Query used to find exact execution of malware and its operations
- index=endpoint {process_guid} | table _time,ParentImage,Image,CommandLine
-
+```
+index=endpoint {process_guid} | table _time,ParentImage,Image,CommandLine
+```
 Observation 3:
-Execution timing cmd.exe execution clearly visible.We can see that cmd.exe spawned command like net user, net localgroup and ipconfig.
+Execution timing cmd.exe execution clearly visible.We can see that cmd.exe executed the commands like net user, net localgroup and ipconfig.
 Thats clearly show suspicious control of malware.
 
 [4. FUTURE IMPROVEMENTS]
